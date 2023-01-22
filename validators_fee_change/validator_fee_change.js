@@ -4,7 +4,7 @@ const fs = require('fs')
 const nearEnvs = ['testnet', 'mainnet'];
 const telegramApiToken = ""; // The telegram bot API token
 const telegramChatId = "";  // The telegram chat ID to sent notifications to
-const oldPath = './validators.json'
+const oldPath = require('path').dirname(require.main.filename) + '/validators.json'
 
 const { connect } = nearAPI;
 
@@ -103,23 +103,25 @@ async function search(nameKey, myArray){
         valNew.push(valObj);
       };
 
-    let firstExecution = false;
+    let firstExecution = true;
     let oldVal;
 
     try {
         if (fs.existsSync(oldPath)) {
             oldVal = fs.readFileSync(oldPath);
             oldVal = JSON.parse(oldVal);
+            firstExecution = false
         }
+        
     } catch(err) {
-        firstExecution = true
+        console.log("firstExecution")
     }
 
-    if(!firstExecution){
+    if(firstExecution === false){
         for await (const valLoop of valNew){
             valLoopOld = await search(valLoop.name, oldVal)
             if(valLoop.percentage != valLoopOld.percentage){
-                console.log("Validation percentage change for ", valLoop.name)
+                sendTelegramMessage("Validation percentage change for " + valLoop.name + ". Old: " + valLoopOld.percentage + ", new: " + valLoop.percentage)
             }
         }
     }
