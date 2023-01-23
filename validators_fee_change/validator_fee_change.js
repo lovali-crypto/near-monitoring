@@ -120,6 +120,9 @@ async function search(nameKey, myArray){
     if(firstExecution === false){
         for await (const valLoop of valNew){
             valLoopOld = await search(valLoop.name, oldVal)
+            if (typeof varLoopOld === 'undefined'){
+                continue
+            }
             if(valLoop.percentage != valLoopOld.percentage){
                 sendTelegramMessage("Validation percentage change for " + valLoop.name + ". Old: " + valLoopOld.percentage + ", new: " + valLoop.percentage)
             }
