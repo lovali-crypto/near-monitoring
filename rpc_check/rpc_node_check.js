@@ -5,6 +5,7 @@ const nearEnvs = ['testnet', 'mainnet'];
 const telegramApiToken = ""; // The telegram bot API token
 const telegramChatId = "";  // The telegram chat ID to sent notifications to
 const blocksThreshold = 10;
+const semver = require('semver');
 
 
 async function compareVersion(env, remoteIP) {
@@ -30,14 +31,14 @@ async function compareVersion(env, remoteIP) {
         sendTelegramMessage("Node is syncing");
     }
 
-    if (remoteConfig.version.version == localConfig.version.version) {
+    if (semver.lte(remoteConfig.version.version, localConfig.version.version)) {
         console.log("Nearcore version check OK! running version: " + localConfig.version.version);
     } else {
         console.log("Nearcore version check NOK! remote version: " + remoteConfig.version.version + ", local version: " + localConfig.version.version);
         sendTelegramMessage("Nearcore version check NOK! remote version: " + remoteConfig.version.version + ", local version: " + localConfig.version.version);
     }
 
-    if (remoteConfig.version.rustc_version == localConfig.version.rustc_version) {
+    if (semver.lte(remoteConfig.version.rustc_version, localConfig.version.rustc_version)) {
         console.log("Nearcore version check OK! running version: " + localConfig.version.rustc_version);
     } else {
         console.log("Nearcore version check NOK! remote version: " + remoteConfig.version.rustc_version + ", local version: " + localConfig.version.rustc_version);
