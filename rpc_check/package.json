@@ -10,6 +10,7 @@
     "license": "ISC",
     "dependencies": {
         "near-api-js": "^0.45.1",
+        "semver": "^7.3.8",
         "xmlhttprequest": "^1.8.0"
     }
 }
