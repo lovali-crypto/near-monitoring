@@ -6,6 +6,7 @@ const telegramApiToken = ""; // The telegram bot API token
 const telegramChatId = "";  // The telegram chat ID to sent notifications to
 const blocksThreshold = 10;
 const semver = require('semver');
+const querystring = require('node:querystring');
 
 
 async function compareVersion(env, remoteIP) {
@@ -48,7 +49,7 @@ async function compareVersion(env, remoteIP) {
 
 async function sendTelegramMessage(text){
 
-    let urlString = `https://api.telegram.org/bot${telegramApiToken}/sendMessage?chat_id=${telegramChatId}&text=${text}`;
+    let urlString = `https://api.telegram.org/bot${telegramApiToken}/sendMessage?chat_id=${telegramChatId}&text=${querystring.escape(text)}`;
 
     let request = new XMLHttpRequest();
     request.open("GET", urlString);
