@@ -16,14 +16,14 @@ async function compareVersion(env, remoteIP) {
         console.log("NEAR protocol version check OK! running version: " + localConfig.protocol_version);
     } else {
         console.log("NEAR protocol version check NOK! remote version: " + remoteConfig.protocol_version + ", local version: " + localConfig.protocol_version);
-        sendTelegramMessage("NEAR protocol version check NOK! remote version: " + remoteConfig.protocol_version + ", local version: " + localConfig.protocol_version);
+        sendTelegramMessage("[NEAR " + env + " - Validator NEAR protocol version] [🔴 Down] remote version: " + remoteConfig.protocol_version + ", local version: " + localConfig.protocol_version);
     }
 
     if(Math.abs(remoteConfig.sync_info.latest_block_height - localConfig.sync_info.latest_block_height) < blocksThreshold) {
         console.log("Last block check OK! latest height: " + localConfig.sync_info.latest_block_height);
     } else {
         console.log("Last block check NOK! remote height: " + remoteConfig.sync_info.latest_block_height + ", local height: " + localConfig.sync_info.latest_block_height);
-        sendTelegramMessage("Last block check NOK! remote height: " + remoteConfig.sync_info.latest_block_height + ", local height: " + localConfig.sync_info.latest_block_height);
+        sendTelegramMessage("[NEAR " + env + " - Validator last bloc] [🔴 Down] Last block check NOK! remote height: " + remoteConfig.sync_info.latest_block_height + ", local height: " + localConfig.sync_info.latest_block_height);
     }
 
     if(localConfig.sync_info.syncing){
@@ -35,14 +35,14 @@ async function compareVersion(env, remoteIP) {
         console.log("Nearcore version check OK! running version: " + localConfig.version.version);
     } else {
         console.log("Nearcore version check NOK! remote version: " + remoteConfig.version.version + ", local version: " + localConfig.version.version);
-        sendTelegramMessage("Nearcore version check NOK! remote version: " + remoteConfig.version.version + ", local version: " + localConfig.version.version);
+        sendTelegramMessage("[NEAR " + env + " - Validator nearcore version] [🔴 Down] remote version: " + remoteConfig.version.version + ", local version: " + localConfig.version.version);
     }
 
     if (semver.lte(remoteConfig.version.rustc_version, localConfig.version.rustc_version)) {
         console.log("Nearcore version check OK! running version: " + localConfig.version.rustc_version);
     } else {
         console.log("Nearcore version check NOK! remote version: " + remoteConfig.version.rustc_version + ", local version: " + localConfig.version.rustc_version);
-        sendTelegramMessage("Nearcore version check NOK! remote version: " + remoteConfig.version.rustc_version + ", local version: " + localConfig.version.rustc_version);
+        sendTelegramMessage("[NEAR " + env + " - Validator nearcore version] [🔴 Down] remote version: " + remoteConfig.version.rustc_version + ", local version: " + localConfig.version.rustc_version);
     }
 }
 
@@ -118,5 +118,3 @@ if (!nearEnvs.includes(args[0])) {
     console.log("Unsupported near environment. Supported values are: " + nearEnvs);
     process.exit(0);
 }
-
-compareVersion(args[0], args[1]);
