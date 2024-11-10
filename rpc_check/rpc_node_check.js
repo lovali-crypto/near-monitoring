@@ -6,8 +6,7 @@ const telegramApiToken = ""; // The telegram bot API token
 const telegramChatId = "";  // The telegram chat ID to sent notifications to
 const blocksThreshold = 10;
 const semver = require('semver');
-const querystring = require('node:querystring');
-
+const querystring = require('node:querystring'); 
 
 async function compareVersion(env, remoteIP) {
     const remoteConfig = await getRemoteVersion(env);
@@ -119,3 +118,5 @@ if (!nearEnvs.includes(args[0])) {
     console.log("Unsupported near environment. Supported values are: " + nearEnvs);
     process.exit(0);
 }
+
+compareVersion(args[0], args[1]);
